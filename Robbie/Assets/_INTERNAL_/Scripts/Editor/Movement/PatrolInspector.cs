@@ -101,6 +101,11 @@ public class PatrolInspector : InspectorBase
 		GUILayout.Space(5);
 		GUILayout.Label("Orientation", EditorStyles.boldLabel);
 		bool orientToDirectionTemp = EditorGUILayout.Toggle("Orient to direction", serializedObject.FindProperty("orientToDirection").boolValue);
+        bool isDogTemp = EditorGUILayout.Toggle("Is dog", serializedObject.FindProperty("isDog").boolValue);
+
+
+        serializedObject.FindProperty("isDog").boolValue = isDogTemp;
+
 		if(orientToDirectionTemp)
 		{
 			EditorGUILayout.PropertyField(serializedObject.FindProperty("lookAxis"));

@@ -11,6 +11,7 @@ public class Patrol : Physics2DObject
 
 	[Header("Orientation")]
 	public bool orientToDirection = false;
+    public bool isDog = false;
 	public Enums.Directions lookAxis = Enums.Directions.Up;
 
 	[Header("Stops")]
@@ -54,8 +55,13 @@ public class Patrol : Physics2DObject
 			currentTargetIndex = (currentTargetIndex<newWaypoints.Length-1) ? currentTargetIndex +1 : 0;
 			if(orientToDirection)
 			{
+                if (isDog) {
+                    currentTarget = newWaypoints[currentTargetIndex];
+                    Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget - transform.right - transform.up).normalized);
+                    return;
+                }
 				currentTarget = newWaypoints[currentTargetIndex];
-				Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget - transform.position).normalized);
+                Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget - transform.position).normalized);
 			}
 		}
 	}
