@@ -6,11 +6,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private List<KeyCode> lifePoints;
+    [SerializeField] private float damage;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -19,20 +19,26 @@ public class Enemy : MonoBehaviour
         
     }
 
-    bool Defend(KeyCode kc)
+    public bool IsAlive()
     {
-        if (lifePoints.Count == 0)
+        return lifePoints.Count > 0;
+    }
+
+    public bool Defend(KeyCode kc)
+    {
+        if (!IsAlive())
             return true;
+        
         if (lifePoints.First() == kc)
         {
             lifePoints.RemoveAt(0);
-            return true;
+            return false;
         }
 
         return false;
     }
 
-    void RemoveLastLifePoint()
+    public void RemoveLastLifePoint()
     {
         if (lifePoints.Count > 0)
             lifePoints.RemoveAt(lifePoints.Capacity - 1);
