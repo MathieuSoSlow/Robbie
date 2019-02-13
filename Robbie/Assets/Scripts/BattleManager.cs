@@ -89,6 +89,10 @@ public class BattleManager : MonoBehaviour
             mouseIsWalking = false;
     }
 
+    private IEnumerator RunMarkerCoroutine()
+    {
+    }
+
     private void CheckAttack()
     {
         var isAttack = true;
