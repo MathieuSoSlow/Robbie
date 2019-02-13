@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class BattleManager : MonoBehaviour
     private Robot robotScript;
     private Animator robotAnimator;
 
-
+    private object walkingMutex = new object();
     private bool mouseIsWalking = false;
     private Vector3 enemyPosition = new Vector3(5f, -2.5f);
 
@@ -57,13 +58,10 @@ public class BattleManager : MonoBehaviour
             timer = 0;
         }
 
-        if (mouseIsWalking)
+        lock (walkingMutex)
         {
-            Vector3.MoveTowards(selectedEnemyGo.transform.position, enemyPosition, 1);
-            if (selectedEnemyGo.transform.position == enemyPosition)
-            {
-                mouseIsWalking = false;
-            }
+            if (mouseIsWalking)
+                Debug.Log("hihi");
         }
     }
 
@@ -75,8 +73,20 @@ public class BattleManager : MonoBehaviour
             selectedEnemyScript = selectedEnemyGo.GetComponent<Enemy>();
             selectedEnemyAnimator = selectedEnemyGo.GetComponent<Animator>();
             currentEnemyCount++;
-            mouseIsWalking = true;
+            StartCoroutine(EnterSceneCoroutine());
+
         }
+    }
+
+    private IEnumerator EnterSceneCoroutine()
+    {
+        lock(walkingMutex)
+            mouseIsWalking = true;
+        var animation = selectedEnemyGo.GetComponent<Animation>();
+        animation.Play("EnterScene");
+        yield return new WaitForSeconds(animation["EnterScene"].length);
+        lock (walkingMutex)
+            mouseIsWalking = false;
     }
 
     private void CheckAttack()

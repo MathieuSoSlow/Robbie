@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6670395156702355958}
   - component: {fileID: 6670395156702355953}
   - component: {fileID: 6670395156702355956}
+  - component: {fileID: 7179901307166616563}
   m_Layer: 0
   m_Name: Mouse
   m_TagString: Untagged
@@ -115,3 +116,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifeCount: 5
   damage: 1
+--- !u!111 &7179901307166616563
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6670395156702355952}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: d9427b30ed841c846be3a4597e23a5c1, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: d9427b30ed841c846be3a4597e23a5c1, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
