@@ -5,12 +5,33 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private List<KeyCode> lifePoints;
+    [SerializeField] private int lifeCount;
+    [SerializeField] private Queue<KeyCode> lifePoints;
+    [SerializeField] private float damage;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        lifePoints = new Queue<KeyCode>();
+        for (int i = 0; i < lifeCount; i++)
+        {
+            var rand = Random.Range(0, 4);
+            switch (rand)
+            {
+                case 0:
+                    lifePoints.Enqueue(KeyCode.F);
+                    break;
+                case 1:
+                    lifePoints.Enqueue(KeyCode.G);
+                    break;
+                case 2:
+                    lifePoints.Enqueue(KeyCode.H);
+                    break;
+                case 3:
+                    lifePoints.Enqueue(KeyCode.J);
+                    break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -19,22 +40,22 @@ public class Enemy : MonoBehaviour
         
     }
 
-    bool Defend(KeyCode kc)
+    public bool IsAlive()
     {
-        if (lifePoints.Count == 0)
+        return lifePoints.Any();
+    }
+
+    public bool Defend(KeyCode kc)
+    {
+        if (!IsAlive())
             return true;
-        if (lifePoints.First() == kc)
+        
+        if (lifePoints.Peek() == kc)
         {
-            lifePoints.RemoveAt(0);
-            return true;
+            lifePoints.Dequeue();
+            return false;
         }
 
         return false;
-    }
-
-    void RemoveLastLifePoint()
-    {
-        if (lifePoints.Count > 0)
-            lifePoints.RemoveAt(lifePoints.Capacity - 1);
     }
 }
