@@ -1,13 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    private Robot player;
+    private GameObject robotGo;
+    private Robot robotScript;
+    private Animator robotAnimator;
 
-    private Enemy selectedEnemy;
-    private Queue<Enemy> enemies;
+
+    private bool mouseIsWalking = false;
+    private Vector3 enemyPosition = new Vector3(5f, -2.5f);
+
+    [SerializeField] private GameObject mousePrefab;
+    [SerializeField] private int enemyCount;
+    private int currentEnemyCount;
+
+    private GameObject selectedEnemyGo;
+    private Enemy selectedEnemyScript;
+    private Animator selectedEnemyAnimator;
 
     [SerializeField] private float tempo;
     [SerializeField] private float timer;
@@ -20,8 +32,16 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Robot>();
-        enemies = new Queue<Enemy>();
+        robotGo = GameObject.Find("Robot");
+        robotScript = robotGo.GetComponent<Robot>();
+        robotAnimator = robotGo.GetComponent<Animator>();
+        
+        selectedEnemyGo = null;
+        selectedEnemyScript = null;
+
+
+        NextEnemy();
+        
     }
 
     // Update is called once per frame
@@ -36,34 +56,48 @@ public class BattleManager : MonoBehaviour
             canAttack = true;
             timer = 0;
         }
+
+        if (mouseIsWalking)
+        {
+            Vector3.MoveTowards(selectedEnemyGo.transform.position, enemyPosition, 1);
+            if (selectedEnemyGo.transform.position == enemyPosition)
+            {
+                mouseIsWalking = false;
+            }
+        }
     }
 
-    public void AddEnemy(Enemy enemy)
+    private void NextEnemy()
     {
-        enemies.Enqueue(enemy);
+        if (currentEnemyCount < enemyCount)
+        {
+            selectedEnemyGo = Instantiate(mousePrefab);
+            selectedEnemyScript = selectedEnemyGo.GetComponent<Enemy>();
+            selectedEnemyAnimator = selectedEnemyGo.GetComponent<Animator>();
+            currentEnemyCount++;
+            mouseIsWalking = true;
+        }
     }
 
     private void CheckAttack()
     {
         var isAttack = true;
-        var keyCode = KeyCode.Q;
+        var keyCode = KeyCode.F;
 
-        if (Input.GetKeyDown(KeyCode.Q))
-            keyCode = KeyCode.Q;
-        else if (Input.GetKeyDown(KeyCode.W))
-            keyCode = KeyCode.W;
-        else if (Input.GetKeyDown(KeyCode.E))
-            keyCode = KeyCode.E;
-        else if (Input.GetKeyDown(KeyCode.R))
-            keyCode = KeyCode.R;
+        if (Input.GetKeyDown(KeyCode.F))
+            keyCode = KeyCode.F;
+        else if (Input.GetKeyDown(KeyCode.G))
+            keyCode = KeyCode.G;
+        else if (Input.GetKeyDown(KeyCode.H))
+            keyCode = KeyCode.H;
+        else if (Input.GetKeyDown(KeyCode.J))
+            keyCode = KeyCode.J;
         else
             isAttack = false;
 
         if (isAttack)
             AttackEnemy(keyCode);
     }
-
-
 
     private void AttackEnemy(KeyCode ak)
     {
@@ -80,11 +114,10 @@ public class BattleManager : MonoBehaviour
 
         if (currentTime > perfectLowerBound && currentTime < perfectHigherBound)
         {
-            if (selectedEnemy.Defend(ak))
+            if (selectedEnemyScript.Defend(ak))
             {
 
             }
-            
         }
 
         if (currentTime > lowerBound && currentTime > higherBound)
@@ -95,7 +128,11 @@ public class BattleManager : MonoBehaviour
 
     public void AttackPlayer(float damage)
     {
-        player.Defend(damage);
+        //RobotScript.Defend(damage);
     }
 
+    public void ChangeDifficulty(int diff)
+    {
+
+    }
 }
