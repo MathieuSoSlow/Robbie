@@ -53,13 +53,17 @@ public class Patrol : Physics2DObject
 		{
 			//new waypoint has been reached
 			currentTargetIndex = (currentTargetIndex<newWaypoints.Length-1) ? currentTargetIndex +1 : 0;
-			if(orientToDirection)
+            if (isDog)
+            {
+                // transform.localRotation = Quaternion.Euler(180, 0, 0);
+                currentTarget = newWaypoints[currentTargetIndex];
+
+                //Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget).normalized);
+
+                return;
+            }
+            if(orientToDirection)
 			{
-                if (isDog) {
-                    currentTarget = newWaypoints[currentTargetIndex];
-                    Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget - transform.right - transform.up).normalized);
-                    return;
-                }
 				currentTarget = newWaypoints[currentTargetIndex];
                 Utils.SetAxisTowards(lookAxis, transform, ((Vector3)currentTarget - transform.position).normalized);
 			}
