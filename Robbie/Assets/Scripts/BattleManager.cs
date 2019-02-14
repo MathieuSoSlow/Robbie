@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
     private Enemy selectedEnemyScript;
     private Animator selectedEnemyAnimator;
 
+    public GameObject hitMarkerGo;
     public GameObject letterMarkerGo;
 
     public GameObject prefabF;
@@ -30,6 +31,8 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabJ;
 
     public int markerCounter = 0;
+
+    public int score;
 
     // Start is called before the first frame update
     void Start()
@@ -143,6 +146,12 @@ public class BattleManager : MonoBehaviour
 
         if (letterMarkerGo.GetComponent<LetterMarker>().key == keyCode)
         {
+
+            if (Vector3.Distance(letterMarkerGo.transform.position, hitMarkerGo.transform.position) <
+                hitMarkerGo.GetComponent<BoxCollider2D>().size.x / 2)
+                score += 1;
+
+            score += 1;
             markerCounter--;
             Destroy(letterMarkerGo);
             letterMarkerGo = null;
