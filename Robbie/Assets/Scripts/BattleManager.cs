@@ -22,13 +22,12 @@ public class BattleManager : MonoBehaviour
     private Enemy selectedEnemyScript;
     private Animator selectedEnemyAnimator;
 
-    [SerializeField] private float tempo;
-    [SerializeField] private float timer;
+    public GameObject letterMarkerGo;
 
-    [SerializeField] private float halfWindow;
-    [SerializeField] private float perfectHalfWindow;
-
-    [SerializeField] private bool canAttack;
+    public GameObject prefabF;
+    public GameObject prefabG;
+    public GameObject prefabH;
+    public GameObject prefabJ;
 
     // Start is called before the first frame update
     void Start()
@@ -36,33 +35,22 @@ public class BattleManager : MonoBehaviour
         robotGo = GameObject.Find("Robot");
         robotScript = robotGo.GetComponent<Robot>();
         robotAnimator = robotGo.GetComponent<Animator>();
+
         
         selectedEnemyGo = null;
         selectedEnemyScript = null;
 
-
         NextEnemy();
-        
+        //var marker = GameObject.Find("MarkerF");
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckAttack();
-
-        timer += Time.fixedDeltaTime;
-
-        if (timer > tempo)
-        {
-            canAttack = true;
-            timer = 0;
-        }
-
-        lock (walkingMutex)
-        {
+        lock(walkingMutex)
             if (mouseIsWalking)
-                Debug.Log("hihi");
-        }
+                return;
+        CheckAttack();
     }
 
     private void NextEnemy()
@@ -74,7 +62,6 @@ public class BattleManager : MonoBehaviour
             selectedEnemyAnimator = selectedEnemyGo.GetComponent<Animator>();
             currentEnemyCount++;
             StartCoroutine(EnterSceneCoroutine());
-
         }
     }
 
@@ -87,11 +74,40 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(animation["EnterScene"].length);
         lock (walkingMutex)
             mouseIsWalking = false;
+        StartCoroutine(RunEnemyCoroutine());
+
     }
 
-//    private IEnumerator RunMarkerCoroutine()
-//    {
-//    }
+    private IEnumerator RunEnemyCoroutine()
+    {
+        var toSend = selectedEnemyScript.lifePoints;
+
+        foreach (var keyCode in toSend)
+        {
+            GameObject currentMarkerGo = null;
+            switch (keyCode)
+            {
+                case KeyCode.F:
+                    currentMarkerGo = Instantiate(prefabF);
+                    break;
+                case KeyCode.G:
+                    currentMarkerGo = Instantiate(prefabG);
+                    break;
+                case KeyCode.H:
+                    currentMarkerGo = Instantiate(prefabH);
+                    break;
+                case KeyCode.J:
+                    currentMarkerGo = Instantiate(prefabJ);
+                    break;
+            }
+            if (currentMarkerGo != null)
+                currentMarkerGo.GetComponent<LetterMarker>().BattleManager = this;
+
+            yield return new WaitForSeconds(1);
+        }
+
+        yield return null;
+    }
 
     private void CheckAttack()
     {
@@ -113,31 +129,10 @@ public class BattleManager : MonoBehaviour
             AttackEnemy(keyCode);
     }
 
-    private void AttackEnemy(KeyCode ak)
+    private void AttackEnemy(KeyCode keyCode)
     {
-        var currentTime = timer;
-        if (!canAttack)
-            return;
+        
 
-        var halfTempo = tempo / 2;
-        var lowerBound = halfTempo - halfWindow;
-        var higherBound = halfTempo + halfWindow;
-
-        var perfectLowerBound = halfTempo - perfectHalfWindow;
-        var perfectHigherBound = halfTempo + perfectHalfWindow;
-
-        if (currentTime > perfectLowerBound && currentTime < perfectHigherBound)
-        {
-            if (selectedEnemyScript.Defend(ak))
-            {
-
-            }
-        }
-
-        if (currentTime > lowerBound && currentTime > higherBound)
-        {
-            canAttack = false;
-        }
     }
 
     public void AttackPlayer(float damage)

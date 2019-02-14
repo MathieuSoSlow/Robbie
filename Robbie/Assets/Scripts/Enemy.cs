@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private int hardness;
     [SerializeField] private int lifeCount;
-    [SerializeField] private Queue<KeyCode> lifePoints;
+    [SerializeField] public Queue<KeyCode> lifePoints;
     [SerializeField] private float damage;
 
     // Start is called before the first frame update
@@ -15,7 +16,7 @@ public class Enemy : MonoBehaviour
         lifePoints = new Queue<KeyCode>();
         for (int i = 0; i < lifeCount; i++)
         {
-            var rand = Random.Range(0, 4);
+            var rand = Random.Range(0, hardness);
             switch (rand)
             {
                 case 0:
