@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LetterMarker : MonoBehaviour
 {
-    public BattleManager BattleManager { get; set; }
+    public BattleManager battleManager;
 
-    public KeyCode Key { get; set; }
+    public KeyCode key;
 
     // Start is called before the first frame update
     void Start()
@@ -28,22 +28,23 @@ public class LetterMarker : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("hihi");
         var go = col.gameObject;
 
-        if (go.name == "PerfectMarker" && BattleManager != null)
+        if (go.name == "PerfectMarker" && battleManager != null)
         {
-            BattleManager.letterMarkerGo = gameObject;
+            battleManager.letterMarkerGo = gameObject;
         }
     }
 
-    void OnCollisionExit2D(Collision2D col)
+    void OnTriggerExit2D(Collider2D col)
     {
         var go = col.gameObject;
-        if (go.name == "PerfectMarker" && BattleManager != null)
+        if (go.name == "PerfectMarker" && battleManager != null)
         {
-            BattleManager.letterMarkerGo = null;
+            battleManager.letterMarkerGo = null;
         }
     }
 }

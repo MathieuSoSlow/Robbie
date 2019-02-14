@@ -11,7 +11,7 @@ public class BattleManager : MonoBehaviour
     private Animator robotAnimator;
 
     private object walkingMutex = new object();
-    private bool mouseIsWalking = false;
+    [SerializeField] private bool mouseIsWalking = false;
     private Vector3 enemyPosition = new Vector3(5f, -2.5f);
 
     [SerializeField] private GameObject mousePrefab;
@@ -28,6 +28,8 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabG;
     public GameObject prefabH;
     public GameObject prefabJ;
+
+    public int counter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +103,7 @@ public class BattleManager : MonoBehaviour
                     break;
             }
             if (currentMarkerGo != null)
-                currentMarkerGo.GetComponent<LetterMarker>().BattleManager = this;
+                currentMarkerGo.GetComponent<LetterMarker>().battleManager = this;
 
             yield return new WaitForSeconds(1);
         }
@@ -131,8 +133,15 @@ public class BattleManager : MonoBehaviour
 
     private void AttackEnemy(KeyCode keyCode)
     {
-        
+        if (letterMarkerGo == null)
+            return;
 
+        if (letterMarkerGo.GetComponent<LetterMarker>().key == keyCode)
+        {
+            counter++;
+            Destroy(letterMarkerGo);
+            letterMarkerGo = null;
+        }
     }
 
     public void AttackPlayer(float damage)
