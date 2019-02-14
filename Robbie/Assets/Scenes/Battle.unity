@@ -149,7 +149,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &79443255
 SpriteRenderer:
@@ -223,7 +223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 81618824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.1998467, y: 0.51882935, z: -0.66598254}
+  m_LocalPosition: {x: 1.1998467, y: 0.51882935, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534683454}
@@ -274,11 +274,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105070441}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.31, y: 0, z: 0}
+  m_LocalPosition: {x: -4.54, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2070145980}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &105070443
 SpriteRenderer:
@@ -483,7 +483,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &202373038
 SpriteRenderer:
@@ -641,7 +641,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &318230584
 SpriteRenderer:
@@ -720,7 +720,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &454992718
 SpriteRenderer:
@@ -838,7 +838,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 145232093
   m_SortingLayer: -4
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 2f832730a0ce13e41928f1c6f8bdef1c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1109,7 +1109,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &884861416
 GameObject:
@@ -1234,14 +1234,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b24abb35c8409747baad925e25e0655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseIsWalking: 0
   mousePrefab: {fileID: 6670395156702355952, guid: 223e381f6831080419a1e0c19309acb5,
     type: 3}
-  enemyCount: 1
+  enemyCount: 3
   letterMarkerGo: {fileID: 0}
   prefabF: {fileID: 3698829104237823945, guid: 2c948fc40fb38a54fb8a6bed739d1aa1, type: 3}
-  prefabG: {fileID: 9077127704610733866, guid: e70ca8f1871302f4b8dc57d9c9bf0daa, type: 3}
-  prefabH: {fileID: 4379632758747413140, guid: be389db3faeb8ac4597d31a91fdb4720, type: 3}
-  prefabJ: {fileID: 8158038412104731758, guid: e36d8d4ddb1edec4fb989238bbb2d11e, type: 3}
+  prefabG: {fileID: 4416431365206807031, guid: 1c4c56f6a9e39924fb0b9614b441759d, type: 3}
+  prefabH: {fileID: 3300451356878306285, guid: be389db3faeb8ac4597d31a91fdb4720, type: 3}
+  prefabJ: {fileID: 2739389527108808764, guid: e36d8d4ddb1edec4fb989238bbb2d11e, type: 3}
+  markerCounter: 0
 --- !u!1 &1008612022
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,7 +1352,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1049041547
 SpriteRenderer:
@@ -1587,7 +1589,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1142744155
 SpriteRenderer:
@@ -1824,7 +1826,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1267721259
 SpriteRenderer:
@@ -2019,7 +2021,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1370712005
 GameObject:
@@ -2177,7 +2179,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1445832495
 GameObject:
@@ -2528,7 +2530,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1758840198
 SpriteRenderer:
@@ -2765,7 +2767,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2026887552
 SpriteRenderer:
@@ -2844,7 +2846,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2049167531
 SpriteRenderer:
@@ -2918,10 +2920,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070145979}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.77, y: 3, z: -10.398271}
+  m_LocalPosition: {x: 1.77, y: 3, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 105070442}
   - {fileID: 1049041546}
   - {fileID: 1408786616}
   - {fileID: 1142744154}
@@ -2935,7 +2936,7 @@ Transform:
   - {fileID: 2131210270}
   - {fileID: 318230583}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2080539062
 GameObject:
@@ -3045,7 +3046,7 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2070145980}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2131210271
 SpriteRenderer:

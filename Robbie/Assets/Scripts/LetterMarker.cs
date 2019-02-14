@@ -25,6 +25,7 @@ public class LetterMarker : MonoBehaviour
         var animation = GetComponent<Animation>();
         animation.Play("Marker");
         yield return new WaitForSeconds(animation["Marker"].length);
+        battleManager.markerCounter--;
         Destroy(gameObject);
     }
 

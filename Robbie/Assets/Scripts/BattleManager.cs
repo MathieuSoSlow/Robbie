@@ -29,7 +29,7 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabH;
     public GameObject prefabJ;
 
-    public int counter = 0;
+    public int markerCounter = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +53,12 @@ public class BattleManager : MonoBehaviour
             if (mouseIsWalking)
                 return;
         CheckAttack();
+        if (markerCounter == 0)
+        {
+            Destroy(selectedEnemyGo);
+            markerCounter = -1;
+            NextEnemy();
+        }
     }
 
     private void NextEnemy()
@@ -83,6 +89,7 @@ public class BattleManager : MonoBehaviour
     private IEnumerator RunEnemyCoroutine()
     {
         var toSend = selectedEnemyScript.lifePoints;
+        markerCounter = toSend.Count;
 
         foreach (var keyCode in toSend)
         {
@@ -107,8 +114,6 @@ public class BattleManager : MonoBehaviour
 
             yield return new WaitForSeconds(1);
         }
-
-        yield return null;
     }
 
     private void CheckAttack()
@@ -138,7 +143,7 @@ public class BattleManager : MonoBehaviour
 
         if (letterMarkerGo.GetComponent<LetterMarker>().key == keyCode)
         {
-            counter++;
+            markerCounter--;
             Destroy(letterMarkerGo);
             letterMarkerGo = null;
         }
