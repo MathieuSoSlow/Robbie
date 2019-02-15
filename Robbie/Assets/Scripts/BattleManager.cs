@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public float letterSpeed;
+    public float timeBetweenLetters;
+
+
     private GameObject robotGo;
     private Robot robotScript;
     private Animator robotAnimator;
@@ -137,9 +141,13 @@ public class BattleManager : MonoBehaviour
                     break;
             }
             if (currentMarkerGo != null)
-                currentMarkerGo.GetComponent<LetterMarker>().battleManager = this;
+            {
+                var letterMarker = currentMarkerGo.GetComponent<LetterMarker>();
+                letterMarker.battleManager = this;
+                letterMarker.speed = letterSpeed;
+            }
 
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(timeBetweenLetters);
         }
     }
 

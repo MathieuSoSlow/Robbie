@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LetterMarker : MonoBehaviour
 {
+    public float speed;
+
     public BattleManager battleManager;
 
     public KeyCode key;
@@ -23,8 +25,13 @@ public class LetterMarker : MonoBehaviour
     private IEnumerator RunMarkerCoroutine()
     {
         var animation = GetComponent<Animation>();
+        animation["Marker"].speed = speed;
+
+        var lag = 1/speed;
+        
         animation.Play("Marker");
-        yield return new WaitForSeconds(animation["Marker"].length);
+        Debug.Log(lag);
+        yield return new WaitForSeconds(animation["Marker"].length * lag);
         battleManager.markerCounter--;
         Destroy(gameObject);
     }
