@@ -10,7 +10,6 @@ public class BattleManager : MonoBehaviour
     public float letterSpeed;
     public float timeBetweenLetters;
 
-
     private GameObject robotGo;
     private Robot robotScript;
     private Animator robotAnimator;
@@ -22,6 +21,10 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject mousePrefab;
     [SerializeField] private int enemyCount;
     private int currentEnemyCount;
+
+    [SerializeField] private int scoreBoardValue;
+    [SerializeField] private GameObject scoreBoardGo;
+    private TextMeshPro scoreBoard;
 
     private GameObject selectedEnemyGo;
     private Enemy selectedEnemyScript;
@@ -38,21 +41,11 @@ public class BattleManager : MonoBehaviour
     public GameObject prefabJ;
 
     public int markerCounter = 0;
-
-    public int score;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        robotGo = GameObject.Find("Robot");
-        robotScript = robotGo.GetComponent<Robot>();
-        robotAnimator = robotGo.GetComponent<Animator>();
 
-        
-        selectedEnemyGo = null;
-        selectedEnemyScript = null;
-        markerCounter = -1;
-        StartCoroutine(DropDownCounterCoroutine());
     }
 
     // Update is called once per frame
@@ -68,6 +61,24 @@ public class BattleManager : MonoBehaviour
 
             StartCoroutine(DeathAnimationCoroutine());
         }
+    }
+
+    void StartLevel(int enemyNumber, float speed, float time)
+    {
+
+        enemyCount = enemyNumber;
+        letterSpeed = speed;
+        timeBetweenLetters = time;
+
+        AddScore(0);
+        robotGo = GameObject.Find("Robot");
+        robotScript = robotGo.GetComponent<Robot>();
+        robotAnimator = robotGo.GetComponent<Animator>();
+
+        selectedEnemyGo = null;
+        selectedEnemyScript = null;
+        markerCounter = -1;
+        StartCoroutine(DropDownCounterCoroutine());
     }
 
     private void NextEnemy()
@@ -99,10 +110,13 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator DeathAnimationCoroutine()
     {
-        selectedEnemyAnimation.Play("Death");
-        yield return  new WaitForSeconds(selectedEnemyAnimation["EnterScene"].length);
-        Destroy(selectedEnemyGo);
-        NextEnemy();
+        if (selectedEnemyAnimation != null)
+        {
+            selectedEnemyAnimation.Play("Death");
+            yield return new WaitForSeconds(selectedEnemyAnimation["EnterScene"].length);
+            Destroy(selectedEnemyGo);
+            NextEnemy();
+        }
     }
 
     private IEnumerator EnterSceneCoroutine()
@@ -181,9 +195,10 @@ public class BattleManager : MonoBehaviour
 
             if (Vector3.Distance(letterMarkerGo.transform.position, hitMarkerGo.transform.position) <
                 hitMarkerGo.GetComponent<BoxCollider2D>().size.x / 2)
-                score += 1;
+                AddScore(2);
+            else
+                AddScore(1);
 
-            score += 1;
             markerCounter--;
             Destroy(letterMarkerGo);
             letterMarkerGo = null;
@@ -193,6 +208,12 @@ public class BattleManager : MonoBehaviour
     public void AttackPlayer(float damage)
     {
         //RobotScript.Defend(damage);
+    }
+
+    void AddScore(int toAdd)
+    {
+        scoreBoardValue += toAdd;
+        scoreBoardGo.GetComponent<TextMeshPro>().text = "score: " + scoreBoardValue;
     }
 
     public void ChangeDifficulty(int diff)
