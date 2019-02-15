@@ -2,16 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
+    public float letterSpeed;
+    public float timeBetweenLetters;
+
+
     private GameObject robotGo;
     private Robot robotScript;
     private Animator robotAnimator;
 
     private object walkingMutex = new object();
-    private bool mouseIsWalking = false;
+    [SerializeField] private bool mouseIsWalking = false;
     private Vector3 enemyPosition = new Vector3(5f, -2.5f);
 
     [SerializeField] private GameObject mousePrefab;
@@ -20,15 +25,21 @@ public class BattleManager : MonoBehaviour
 
     private GameObject selectedEnemyGo;
     private Enemy selectedEnemyScript;
-    private Animator selectedEnemyAnimator;
+    private Animation selectedEnemyAnimation;
 
-    [SerializeField] private float tempo;
-    [SerializeField] private float timer;
+    public GameObject hitMarkerGo;
+    public GameObject letterMarkerGo;
 
-    [SerializeField] private float halfWindow;
-    [SerializeField] private float perfectHalfWindow;
+    public GameObject prefabDropDownCounter;
+    
+    public GameObject prefabF;
+    public GameObject prefabG;
+    public GameObject prefabH;
+    public GameObject prefabJ;
 
-    [SerializeField] private bool canAttack;
+    public int markerCounter = 0;
+
+    public int score;
 
     // Start is called before the first frame update
     void Start()
@@ -36,32 +47,26 @@ public class BattleManager : MonoBehaviour
         robotGo = GameObject.Find("Robot");
         robotScript = robotGo.GetComponent<Robot>();
         robotAnimator = robotGo.GetComponent<Animator>();
+
         
         selectedEnemyGo = null;
         selectedEnemyScript = null;
-
-
-        NextEnemy();
-        
+        markerCounter = -1;
+        StartCoroutine(DropDownCounterCoroutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckAttack();
-
-        timer += Time.fixedDeltaTime;
-
-        if (timer > tempo)
-        {
-            canAttack = true;
-            timer = 0;
-        }
-
-        lock (walkingMutex)
-        {
+        lock(walkingMutex)
             if (mouseIsWalking)
-                Debug.Log("hihi");
+                return;
+        CheckAttack();
+        if (markerCounter == 0)
+        {
+            markerCounter = -1;
+
+            StartCoroutine(DeathAnimationCoroutine());
         }
     }
 
@@ -71,11 +76,33 @@ public class BattleManager : MonoBehaviour
         {
             selectedEnemyGo = Instantiate(mousePrefab);
             selectedEnemyScript = selectedEnemyGo.GetComponent<Enemy>();
-            selectedEnemyAnimator = selectedEnemyGo.GetComponent<Animator>();
+            selectedEnemyAnimation = selectedEnemyGo.GetComponent<Animation>();
             currentEnemyCount++;
             StartCoroutine(EnterSceneCoroutine());
-
         }
+    }
+
+    private IEnumerator DropDownCounterCoroutine()
+    {
+        var counterGo = Instantiate(prefabDropDownCounter);
+        var animation = counterGo.GetComponent<Animation>();
+
+        for (int i = 3; i > 0; i--)
+        {
+            animation.Play("DropDown");
+            counterGo.GetComponent<TextMeshPro>().text = i.ToString();
+            yield return new WaitForSeconds(animation["DropDown"].length + 0.15f);
+        }
+        Destroy(counterGo);
+        NextEnemy();
+    }
+
+    private IEnumerator DeathAnimationCoroutine()
+    {
+        selectedEnemyAnimation.Play("Death");
+        yield return  new WaitForSeconds(selectedEnemyAnimation["EnterScene"].length);
+        Destroy(selectedEnemyGo);
+        NextEnemy();
     }
 
     private IEnumerator EnterSceneCoroutine()
@@ -87,11 +114,42 @@ public class BattleManager : MonoBehaviour
         yield return new WaitForSeconds(animation["EnterScene"].length);
         lock (walkingMutex)
             mouseIsWalking = false;
+        StartCoroutine(RunEnemyCoroutine());
     }
 
-//    private IEnumerator RunMarkerCoroutine()
-//    {
-//    }
+    private IEnumerator RunEnemyCoroutine()
+    {
+        var toSend = selectedEnemyScript.lifePoints;
+        markerCounter = toSend.Count;
+
+        foreach (var keyCode in toSend)
+        {
+            GameObject currentMarkerGo = null;
+            switch (keyCode)
+            {
+                case KeyCode.F:
+                    currentMarkerGo = Instantiate(prefabF);
+                    break;
+                case KeyCode.G:
+                    currentMarkerGo = Instantiate(prefabG);
+                    break;
+                case KeyCode.H:
+                    currentMarkerGo = Instantiate(prefabH);
+                    break;
+                case KeyCode.J:
+                    currentMarkerGo = Instantiate(prefabJ);
+                    break;
+            }
+            if (currentMarkerGo != null)
+            {
+                var letterMarker = currentMarkerGo.GetComponent<LetterMarker>();
+                letterMarker.battleManager = this;
+                letterMarker.speed = letterSpeed;
+            }
+
+            yield return new WaitForSeconds(timeBetweenLetters);
+        }
+    }
 
     private void CheckAttack()
     {
@@ -113,30 +171,22 @@ public class BattleManager : MonoBehaviour
             AttackEnemy(keyCode);
     }
 
-    private void AttackEnemy(KeyCode ak)
+    private void AttackEnemy(KeyCode keyCode)
     {
-        var currentTime = timer;
-        if (!canAttack)
+        if (letterMarkerGo == null)
             return;
 
-        var halfTempo = tempo / 2;
-        var lowerBound = halfTempo - halfWindow;
-        var higherBound = halfTempo + halfWindow;
-
-        var perfectLowerBound = halfTempo - perfectHalfWindow;
-        var perfectHigherBound = halfTempo + perfectHalfWindow;
-
-        if (currentTime > perfectLowerBound && currentTime < perfectHigherBound)
+        if (letterMarkerGo.GetComponent<LetterMarker>().key == keyCode)
         {
-            if (selectedEnemyScript.Defend(ak))
-            {
 
-            }
-        }
+            if (Vector3.Distance(letterMarkerGo.transform.position, hitMarkerGo.transform.position) <
+                hitMarkerGo.GetComponent<BoxCollider2D>().size.x / 2)
+                score += 1;
 
-        if (currentTime > lowerBound && currentTime > higherBound)
-        {
-            canAttack = false;
+            score += 1;
+            markerCounter--;
+            Destroy(letterMarkerGo);
+            letterMarkerGo = null;
         }
     }
 
