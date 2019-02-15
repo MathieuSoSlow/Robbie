@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class BattleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        StartLevel(3, 2, 0.5f);
     }
 
     // Update is called once per frame
@@ -90,6 +91,10 @@ public class BattleManager : MonoBehaviour
             selectedEnemyAnimation = selectedEnemyGo.GetComponent<Animation>();
             currentEnemyCount++;
             StartCoroutine(EnterSceneCoroutine());
+        }
+        else
+        {
+            SceneManager.LoadScene("brand-new-wold");
         }
     }
 
@@ -188,20 +193,28 @@ public class BattleManager : MonoBehaviour
     private void AttackEnemy(KeyCode keyCode)
     {
         if (letterMarkerGo == null)
+        {
+            AddScore(-1);
             return;
+
+        }
 
         if (letterMarkerGo.GetComponent<LetterMarker>().key == keyCode)
         {
 
             if (Vector3.Distance(letterMarkerGo.transform.position, hitMarkerGo.transform.position) <
                 hitMarkerGo.GetComponent<BoxCollider2D>().size.x / 2)
-                AddScore(2);
+                AddScore(10);
             else
-                AddScore(1);
+                AddScore(5);
 
             markerCounter--;
             Destroy(letterMarkerGo);
             letterMarkerGo = null;
+        }
+        else
+        {
+            AddScore(-1);
         }
     }
 
