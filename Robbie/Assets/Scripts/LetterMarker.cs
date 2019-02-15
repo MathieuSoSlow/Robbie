@@ -31,7 +31,6 @@ public class LetterMarker : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("hihi");
         var go = col.gameObject;
 
         if (go.name == "PerfectMarker" && battleManager != null)

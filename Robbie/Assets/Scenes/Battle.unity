@@ -185,8 +185,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -519,8 +519,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -756,8 +756,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1240,6 +1240,8 @@ MonoBehaviour:
   enemyCount: 3
   hitMarkerGo: {fileID: 105070441}
   letterMarkerGo: {fileID: 0}
+  prefabDropDownCounter: {fileID: 7098296853886396777, guid: 203905bf238e7334eb888805cf6d93b5,
+    type: 3}
   prefabF: {fileID: 3698829104237823945, guid: 2c948fc40fb38a54fb8a6bed739d1aa1, type: 3}
   prefabG: {fileID: 4416431365206807031, guid: 1c4c56f6a9e39924fb0b9614b441759d, type: 3}
   prefabH: {fileID: 3300451356878306285, guid: be389db3faeb8ac4597d31a91fdb4720, type: 3}
@@ -1627,8 +1629,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1864,8 +1866,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2155,8 +2157,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2568,8 +2570,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2805,8 +2807,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2884,8 +2886,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3084,8 +3086,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 883998713
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bbc3a37bef07ef3448b23a706b9b59d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

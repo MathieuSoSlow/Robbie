@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -20,11 +21,13 @@ public class BattleManager : MonoBehaviour
 
     private GameObject selectedEnemyGo;
     private Enemy selectedEnemyScript;
-    private Animator selectedEnemyAnimator;
+    private Animation selectedEnemyAnimation;
 
     public GameObject hitMarkerGo;
     public GameObject letterMarkerGo;
 
+    public GameObject prefabDropDownCounter;
+    
     public GameObject prefabF;
     public GameObject prefabG;
     public GameObject prefabH;
@@ -44,9 +47,8 @@ public class BattleManager : MonoBehaviour
         
         selectedEnemyGo = null;
         selectedEnemyScript = null;
-
-        NextEnemy();
-        //var marker = GameObject.Find("MarkerF");
+        markerCounter = -1;
+        StartCoroutine(DropDownCounterCoroutine());
     }
 
     // Update is called once per frame
@@ -58,9 +60,9 @@ public class BattleManager : MonoBehaviour
         CheckAttack();
         if (markerCounter == 0)
         {
-            Destroy(selectedEnemyGo);
             markerCounter = -1;
-            NextEnemy();
+
+            StartCoroutine(DeathAnimationCoroutine());
         }
     }
 
@@ -70,10 +72,33 @@ public class BattleManager : MonoBehaviour
         {
             selectedEnemyGo = Instantiate(mousePrefab);
             selectedEnemyScript = selectedEnemyGo.GetComponent<Enemy>();
-            selectedEnemyAnimator = selectedEnemyGo.GetComponent<Animator>();
+            selectedEnemyAnimation = selectedEnemyGo.GetComponent<Animation>();
             currentEnemyCount++;
             StartCoroutine(EnterSceneCoroutine());
         }
+    }
+
+    private IEnumerator DropDownCounterCoroutine()
+    {
+        var counterGo = Instantiate(prefabDropDownCounter);
+        var animation = counterGo.GetComponent<Animation>();
+
+        for (int i = 3; i > 0; i--)
+        {
+            animation.Play("DropDown");
+            counterGo.GetComponent<TextMeshPro>().text = i.ToString();
+            yield return new WaitForSeconds(animation["DropDown"].length + 0.15f);
+        }
+        Destroy(counterGo);
+        NextEnemy();
+    }
+
+    private IEnumerator DeathAnimationCoroutine()
+    {
+        selectedEnemyAnimation.Play("Death");
+        yield return  new WaitForSeconds(selectedEnemyAnimation["EnterScene"].length);
+        Destroy(selectedEnemyGo);
+        NextEnemy();
     }
 
     private IEnumerator EnterSceneCoroutine()
@@ -86,7 +111,6 @@ public class BattleManager : MonoBehaviour
         lock (walkingMutex)
             mouseIsWalking = false;
         StartCoroutine(RunEnemyCoroutine());
-
     }
 
     private IEnumerator RunEnemyCoroutine()
